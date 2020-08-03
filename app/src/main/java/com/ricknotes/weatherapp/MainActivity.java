@@ -12,10 +12,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mWeatherImg;
     private RecyclerView mHourlyRecyclerView;
     private RecyclerView mDailyRecyclerView;
+    private ScrollView mScrollView;
     private Api mApi;
 
     @Override
@@ -94,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         mWeatherImg = findViewById(R.id.activity_main_weather_img);
         mHourlyRecyclerView = findViewById(R.id.activity_main_hourly_recycler_view);
         mDailyRecyclerView = findViewById(R.id.activity_main_daily_recycler_view);
+        mScrollView = findViewById(R.id.activity_main_scrollView);
     }
     private void updateViews(){
         //http://openweathermap.org/img/wn/10d@2x.png
@@ -192,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Results> call, Response<Results> response) {
                 mResults = response.body();
+                mScrollView.setVisibility(View.VISIBLE);
                 updateViews();
                 setHourlyData();
                 setDailyData();

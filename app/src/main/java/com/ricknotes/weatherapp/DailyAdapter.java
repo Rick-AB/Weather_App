@@ -71,7 +71,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
 //        Log.d(TAG, "getDayOfWeek:*************** " + date);
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(timestamp * 1000);
-        String date = DateFormat.format("dd-MM-yyyy", cal).toString();
+        String date = DateFormat.format("dd", cal).toString();
         Log.d(TAG, "getDayOfWeek:*************** " + date);
         return date;
     }
