@@ -56,7 +56,7 @@ public class HourlyAdapter extends RecyclerView.Adapter<HourlyAdapter.HourlyView
     private String getDate(long time) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time * 1000);
-        String date = DateFormat.format("HH", cal).toString();
+        String date = DateFormat.format("HH:mm", cal).toString();
         return date;
     }
 

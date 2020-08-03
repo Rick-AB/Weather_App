@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,9 +44,9 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
     public void onBindViewHolder(@NonNull DailyViewHolder holder, int position) {
         Daily data = mList.get(position);
 
-        Log.d(TAG, "##############onBindViewHolder: ##########" + data.getDt());
+       // Log.d(TAG, "##############onBindViewHolder: ##########" + data.getDt());
 
-        String day = getDayOfWeek(data.getDt());
+        String day = getDayOfWeek((long) data.getDt());
         String humidity = data.getHumidity() + "%";
         String max = Math.round(data.getTemp().getMax()) + "\u00B0";
         String min = Math.round(data.getTemp().getMin()) + "\u00B0";
@@ -64,16 +65,25 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
 
     }
 
-    private String getDayOfWeek(int timestamp){
-//        SimpleDateFormat formatter = new SimpleDateFormat("EEEE",Locale.ENGLISH);
-//        Date date = new Date(timestamp);
-//
-//        Log.d(TAG, "getDayOfWeek:*************** " + date);
+    private String getDayOfWeek(long timestamp){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Calendar c = Calendar.getInstance();
+        //c.setTime(formatter.format(date));
+
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(timestamp * 1000);
-        String date = DateFormat.format("dd", cal).toString();
-        Log.d(TAG, "getDayOfWeek:*************** " + date);
-        return date;
+        String datee = DateFormat.format("dd-MM-yyyy", cal).toString();
+        Log.d(TAG, "getDayOfWeek: ############" + datee);
+          try {
+              Date date = formatter.parse(datee);
+              Log.d(TAG, "getDayOfWeek:*************** " + date);
+              return new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     @Override
